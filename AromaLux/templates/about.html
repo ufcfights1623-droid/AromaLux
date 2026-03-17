@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - AromaLux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navbar">
+            <a href="/" class="logo">✨ AromaLux</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/perfumes">Perfumes</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="/cart" class="nav-icon">🛒 <span class="cart-badge">0</span></a>
+            </div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section style="padding: 4rem 0;">
+            <h1>About AromaLux</h1>
+            <p style="font-size: 1.2rem; margin: 2rem 0;">Your Premier Destination for Luxury Fragrances</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                <div>
+                    <h2>Our Mission</h2>
+                    <p>At AromaLux, we believe that fragrance is more than just a scent—it's a personal expression of elegance and sophistication. Our mission is to connect fragrance enthusiasts worldwide with premium, authentic perfumes from the world's most prestigious brands.</p>
+                </div>
+                <div>
+                    <h2>Our Vision</h2>
+                    <p>We envision becoming the world's leading luxury fragrance marketplace, trusted by millions for authentic products, expert guidance, and exceptional customer service. We're committed to making luxury perfumes accessible to everyone.</p>
+                </div>
+            </div>
+
+            <div style="background: rgba(232, 75, 138, 0.1); padding: 2rem; border-radius: 15px; margin: 2rem 0;">
+                <h2>Why Choose AromaLux?</h2>
+                <ul style="margin-top: 1rem; list-style: none;">
+                    <li style="padding: 0.75rem 0;">✓ 100% Authentic Fragrances</li>
+                    <li style="padding: 0.75rem 0;">✓ Curated Selection from Luxury Brands</li>
+                    <li style="padding: 0.75rem 0;">✓ Expert Customer Service</li>
+                    <li style="padding: 0.75rem 0;">✓ Fast & Secure Delivery</li>
+                    <li style="padding: 0.75rem 0;">✓ Competitive Pricing</li>
+                    <li style="padding: 0.75rem 0;">✓ Fragrance Education & Guides</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AromaLux</h3>
+                    <p>Luxury fragrances worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

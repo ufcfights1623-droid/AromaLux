@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - AromaLux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        .orders-table thead {
+            background: linear-gradient(135deg, #E84B8A, #8B5CF6);
+            color: var(--white);
+        }
+        .orders-table th,
+        .orders-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .orders-table tbody tr:hover {
+            background: rgba(232, 75, 138, 0.05);
+        }
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .status-pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+        .status-processing {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+        .status-shipped {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+        .status-delivered {
+            background: #C7F0D8;
+            color: #22543D;
+        }
+        .status-cancelled {
+            background: #FED7D7;
+            color: #742A2A;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navbar">
+            <a href="/" class="logo">✨ AromaLux</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/perfumes">Perfumes</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="/cart" class="nav-icon">🛒 <span class="cart-badge">0</span></a>
+            </div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>My Orders</h1>
+        <p style="color: var(--text-light); margin-bottom: 2rem;">Track your orders and view order history</p>
+        
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Delivery</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="orders-body">
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 2rem;">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AromaLux</h3>
+                    <p>Luxury fragrances worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        async function loadOrders() {
+            try {
+                const response = await fetch('/api/orders');
+                if (!response.ok) {
+                    window.location.href = '/login';
+                    return;
+                }
+                
+                const orders = await response.json();
+                const tbody = document.getElementById('orders-body');
+                
+                if (orders.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 2rem;">
+                                <p>No orders yet. <a href="/perfumes">Start shopping!</a></p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                tbody.innerHTML = orders.map(order => `
+                    <tr>
+                        <td><strong>${order.order_number}</strong></td>
+                        <td>${new Date(order.created_at).toLocaleDateString()}</td>
+                        <td>$${order.final_price.toFixed(2)}</td>
+                        <td>
+                            <span class="status-badge status-${order.order_status}">
+                                ${order.order_status.charAt(0).toUpperCase() + order.order_status.slice(1)}
+                            </span>
+                        </td>
+                        <td>${order.estimated_delivery ? new Date(order.estimated_delivery).toLocaleDateString() : 'TBD'}</td>
+                        <td>
+                            <a href="#" class="btn btn-small btn-outline">View</a>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading orders:', error);
+            }
+        }
+        
+        loadOrders();
+    </script>
+</body>
+</html>

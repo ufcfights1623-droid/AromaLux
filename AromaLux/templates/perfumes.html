@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Perfumes - AromaLux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navbar">
+            <a href="/" class="logo">✨ AromaLux</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/perfumes">Perfumes</a></li>
+                <li><a href="/collections">Collections</a></li>
+                <li><a href="/offers">Offers</a></li>
+                <li><a href="/blogs">Blog</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="search-bar">
+                    <form onsubmit="handleSearch(event)">
+                        <input type="text" placeholder="Search perfumes..." required>
+                        <button type="submit">🔍</button>
+                    </form>
+                </div>
+                <a href="/cart" class="nav-icon">🛒 <span class="cart-badge">0</span></a>
+                <a href="/profile" class="nav-icon">👤</a>
+            </div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="container" style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; margin: 2rem 0;">
+        <!-- Sidebar Filters -->
+        <aside class="filter-sidebar">
+            <h3>Filters</h3>
+            
+            <div class="filter-group">
+                <div class="filter-title">Category</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="cat-all" onchange="AppState.filters.category = 0; applyFilters()">
+                    <label for="cat-all">All Categories</label>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-title">Price Range</div>
+                <div class="price-range-slider">
+                    <input type="range" min="0" max="10000" value="0" onchange="AppState.filters.min_price = this.value; applyFilters()">
+                    <input type="range" min="0" max="10000" value="10000" onchange="AppState.filters.max_price = this.value; applyFilters()">
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">$<span id="min-price">0</span> - $<span id="max-price">10000</span></p>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-title">Sort By</div>
+                <select onchange="sortBy(this.value)" style="width: 100%; padding: 0.5rem; border-radius: 5px; border: 1px solid var(--light-gray);">
+                    <option value="latest">Latest</option>
+                    <option value="price_low">Price: Low to High</option>
+                    <option value="price_high">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="location.reload()">Reset Filters</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <div style="margin-bottom: 2rem;">
+                <h1>Luxury Perfumes</h1>
+                <p style="color: var(--text-light);">Discover our exclusive collection of premium fragrances</p>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="products-grid"></div>
+            
+            <!-- Pagination -->
+            <div class="pagination-container"></div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AromaLux</h3>
+                    <p>Your destination for luxury fragrances worldwide.</p>
+                    <div class="social-links">
+                        <a href="#">f</a>
+                        <a href="#">📷</a>
+                        <a href="#">𝕏</a>
+                        <a href="#">in</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/perfumes">Shop</a></li>
+                        <li><a href="/collections">Collections</a></li>
+                        <li><a href="/blogs">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        loadPerfumes();
+    </script>
+</body>
+</html>

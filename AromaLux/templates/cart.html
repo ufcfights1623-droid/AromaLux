@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - AromaLux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navbar">
+            <a href="/" class="logo">✨ AromaLux</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/perfumes">Perfumes</a></li>
+                <li><a href="/collections">Collections</a></li>
+                <li><a href="/offers">Offers</a></li>
+                <li><a href="/blogs">Blog</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="/cart" class="nav-icon">🛒 <span class="cart-badge">0</span></a>
+                <a href="/profile" class="nav-icon">👤</a>
+            </div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding: 2rem 0;">
+        <h1>Shopping Cart</h1>
+        
+        <div class="cart-container">
+            <div class="cart-items"></div>
+            <div class="cart-summary">
+                <h3>Order Summary</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AromaLux</h3>
+                    <p>Luxury fragrances delivered worldwide.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/perfumes">Shop</a></li>
+                        <li><a href="/blogs">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        loadCart();
+    </script>
+</body>
+</html>

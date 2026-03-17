@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Offers - AromaLux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navbar">
+            <a href="/" class="logo">✨ AromaLux</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/perfumes">Perfumes</a></li>
+                <li><a href="/offers">Offers</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="/cart" class="nav-icon">🛒 <span class="cart-badge">0</span></a>
+            </div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Special Offers</h1>
+        <p style="color: var(--text-light); margin-bottom: 2rem;">Discover unbeatable deals on luxury fragrances</p>
+        
+        <div class="products-grid" id="offers-grid"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AromaLux</h3>
+                    <p>Luxury fragrances worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        fetch('/api/perfumes?page=1')
+            .then(r => r.json())
+            .then(data => {
+                const offersGrid = document.getElementById('offers-grid');
+                const discountedItems = data.perfumes.filter(p => p.discount_percent > 0).slice(0, 12);
+                
+                offersGrid.innerHTML = discountedItems.map(p => `
+                    <div class="product-card">
+                        <div class="product-image" data-icon="💎">
+                            <div class="product-badge">
+                                <span class="discount-badge" style="font-size: 1rem;">-${p.discount_percent}%</span>
+                            </div>
+                        </div>
+                        <h3 class="product-name">${p.perfume_name}</h3>
+                        <p class="product-brand">${p.brand_name}</p>
+                        <div class="product-price">
+                            <span class="original-price">$${p.price.toFixed(2)}</span>
+                            <span class="price">$${p.discounted_price.toFixed(2)}</span>
+                        </div>
+                        <button class="btn-add-cart" onclick="addToCart(${p.perfume_id})">🛒 Add to Cart</button>
+                    </div>
+                `).join('');
+            });
+    </script>
+</body>
+</html>

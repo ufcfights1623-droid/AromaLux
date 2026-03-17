@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AromaLux - Luxury Perfume Marketplace. Discover premium fragrances from world-renowned brands.">
+    <title>AromaLux - Luxury Perfume Marketplace</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navbar">
+            <a href="/" class="logo">✨ AromaLux</a>
+            
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/perfumes">Perfumes</a></li>
+                <li><a href="/collections">Collections</a></li>
+                <li><a href="/offers">Offers</a></li>
+                <li><a href="/blogs">Blog</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            
+            <div class="nav-right">
+                <div class="search-bar">
+                    <form onsubmit="handleSearch(event)">
+                        <input type="text" placeholder="Search perfumes..." required>
+                        <button type="submit">🔍</button>
+                    </form>
+                </div>
+                
+                <a href="/cart" class="nav-icon" title="Shopping Cart">
+                    🛒
+                    <span class="cart-badge">0</span>
+                </a>
+                
+                <a href="/profile" class="nav-icon" title="Account">👤</a>
+            </div>
+            
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Discover Luxury Fragrances</h1>
+                <p class="subtitle">Experience the world's finest perfumes. Curated collections from prestigious brands worldwide.</p>
+                <a href="/perfumes" class="btn btn-primary">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Collection</h2>
+            </div>
+            
+            <div class="products-grid" id="featured-products">
+                <!-- Products loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="section" style="background: rgba(232, 75, 138, 0.05);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore Categories</h2>
+            </div>
+            
+            <div class="products-grid" id="categories-grid">
+                <!-- Categories loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Classifications Section (Fragrance Types) -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Fragrance Classifications</h2>
+                <p>Discover perfumes by fragrance family and character</p>
+            </div>
+            
+            <div class="classifications-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 2rem;">
+                <a href="/classification/floral" class="classification-card" style="background: linear-gradient(135deg, #FFB6E1, #E84B8A); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(232, 75, 138, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌸</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Floral</h3>
+                </a>
+                <a href="/classification/fresh" class="classification-card" style="background: linear-gradient(135deg, #87CEEB, #4FA3D1); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(79, 163, 209, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌊</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Fresh</h3>
+                </a>
+                <a href="/classification/spicy" class="classification-card" style="background: linear-gradient(135deg, #FF6B6B, #C92A2A); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(201, 42, 42, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌶️</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Spicy</h3>
+                </a>
+                <a href="/classification/vanilla" class="classification-card" style="background: linear-gradient(135deg, #D4A373, #A0826D); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(160, 130, 109, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🍦</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Vanilla</h3>
+                </a>
+                <a href="/classification/powdery" class="classification-card" style="background: linear-gradient(135deg, #E6D5E8, #C9A8D8); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(201, 168, 216, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">✨</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Powdery</h3>
+                </a>
+                <a href="/classification/sweet" class="classification-card" style="background: linear-gradient(135deg, #FFD700, #FFA500); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🍬</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Sweet</h3>
+                </a>
+                <a href="/classification/fruity" class="classification-card" style="background: linear-gradient(135deg, #FF6B9D, #C44569); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(196, 69, 105, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🍓</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Fruity</h3>
+                </a>
+                <a href="/classification/tropical" class="classification-card" style="background: linear-gradient(135deg, #76D7C4, #209B74); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(32, 155, 116, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌴</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Tropical</h3>
+                </a>
+                <a href="/classification/soft" class="classification-card" style="background: linear-gradient(135deg, #D1C4E9, #9FA8DA); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(159, 168, 218, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">☁️</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Soft</h3>
+                </a>
+                <a href="/classification/citrus" class="classification-card" style="background: linear-gradient(135deg, #FFF59D, #FFD54F); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 213, 79, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🍊</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Citrus</h3>
+                </a>
+                <a href="/classification/musky" class="classification-card" style="background: linear-gradient(135deg, #BDBDBD, #757575); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(117, 117, 117, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌙</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Musky</h3>
+                </a>
+                <a href="/classification/woody" class="classification-card" style="background: linear-gradient(135deg, #8B6F47, #6B4423); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(107, 68, 35, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌲</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Woody</h3>
+                </a>
+                <a href="/classification/leather" class="classification-card" style="background: linear-gradient(135deg, #795548, #5D4037); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(93, 64, 55, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎒</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Leather</h3>
+                </a>
+                <a href="/classification/green" class="classification-card" style="background: linear-gradient(135deg, #81C784, #4CAF50); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌿</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Green</h3>
+                </a>
+                <a href="/classification/aromatic" class="classification-card" style="background: linear-gradient(135deg, #A1887F, #795548); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(121, 85, 72, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌱</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Aromatic</h3>
+                </a>
+                <a href="/classification/patchouli" class="classification-card" style="background: linear-gradient(135deg, #9C786C, #6D4C41); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(109, 76, 65, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🍂</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Patchouli</h3>
+                </a>
+                <a href="/classification/amber" class="classification-card" style="background: linear-gradient(135deg, #FFB74D, #FF9800); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔥</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Amber</h3>
+                </a>
+                <a href="/classification/oud" class="classification-card" style="background: linear-gradient(135deg, #D7CCC8, #9E837A); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(158, 131, 122, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">👑</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Oud</h3>
+                </a>
+                <a href="/classification/animalic" class="classification-card" style="background: linear-gradient(135deg, #B39DDB, #9575CD); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(149, 117, 205, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🦁</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Animalic</h3>
+                </a>
+                <a href="/classification/tobacco" class="classification-card" style="background: linear-gradient(135deg, #A69B7F, #7D6B65); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(125, 107, 101, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🚬</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Tobacco</h3>
+                </a>
+                <a href="/classification/aquatic" class="classification-card" style="background: linear-gradient(135deg, #80DEEA, #26C6DA); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(38, 198, 218, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💧</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Aquatic</h3>
+                </a>
+                <a href="/classification/oriental" class="classification-card" style="background: linear-gradient(135deg, #CE93D8, #AB47BC); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(171, 71, 188, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🧞</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Oriental</h3>
+                </a>
+                <a href="/classification/light" class="classification-card" style="background: linear-gradient(135deg, #F8F9FA, #E9ECEF); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: #333; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(233, 236, 239, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">☀️</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Light</h3>
+                </a>
+                <a href="/classification/boozy" class="classification-card" style="background: linear-gradient(135deg, #B71C1C, #880E4F); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(136, 14, 79, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🍷</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Boozy</h3>
+                </a>
+                <a href="/classification/coffee" class="classification-card" style="background: linear-gradient(135deg, #6F4E37, #3E2723); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(62, 39, 35, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">☕</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Coffee</h3>
+                </a>
+                <a href="/classification/chypre" class="classification-card" style="background: linear-gradient(135deg, #B8860B, #8B6914); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(139, 105, 20, 0.3);">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌾</div>
+                    <h3 style="margin: 0; font-size: 1.1rem;">Chypré</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="section">
+        <div class="container">
+            <div class="benefits-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div class="benefit-card" style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎁</div>
+                    <h3>Premium Quality</h3>
+                    <p>100% authentic fragrances from luxury brands</p>
+                </div>
+                
+                <div class="benefit-card" style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚚</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Quick and secure shipping worldwide</p>
+                </div>
+                
+                <div class="benefit-card" style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💳</div>
+                    <h3>Secure Payment</h3>
+                    <p>Multiple payment options for your convenience</p>
+                </div>
+                
+                <div class="benefit-card" style="text-align: center; padding: 2rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📞</div>
+                    <h3>24/7 Support</h3>
+                    <p>Expert customer service always available</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="section" style="background: linear-gradient(135deg, rgba(232, 75, 138, 0.2), rgba(139, 92, 246, 0.2)); border-radius: 20px; margin: 2rem; text-align: center;">
+        <div class="container">
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Get exclusive offers and fragrance tips delivered to your inbox</p>
+            
+            <form style="max-width: 400px; margin: 1.5rem auto;">
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="email" placeholder="Enter your email" required style="flex: 1; padding: 0.75rem; border-radius: 8px; border: 2px solid var(--light-gray);">
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AromaLux</h3>
+                    <p>Your destination for luxury fragrances. Discover exclusive perfumes from world-renowned brands.</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook">f</a>
+                        <a href="#" title="Instagram">📷</a>
+                        <a href="#" title="Twitter">𝕏</a>
+                        <a href="#" title="LinkedIn">in</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/perfumes">Shop Perfumes</a></li>
+                        <li><a href="/collections">Collections</a></li>
+                        <li><a href="/offers">Special Offers</a></li>
+                        <li><a href="/blogs">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Account</h3>
+                    <ul>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/signup">Sign Up</a></li>
+                        <li><a href="#">Wishlist</a></li>
+                        <li><a href="#">Order History</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 AromaLux. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        // Load featured products
+        fetch('/api/perfumes?page=1')
+            .then(r => r.json())
+            .then(data => {
+                const container = document.getElementById('featured-products');
+                if (container) {
+                    const featured = data.perfumes.slice(0, 6);
+                    container.innerHTML = featured.map(perfume => `
+                        <div class="product-card" data-id="${perfume.perfume_id}">
+                            <div class="product-image" data-icon="💎">
+                                ${perfume.discount_percent > 0 ? `
+                                    <div class="product-badge">
+                                        <span class="discount-badge">-${perfume.discount_percent}%</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <h3 class="product-name">${perfume.perfume_name}</h3>
+                            <p class="product-brand">${perfume.brand_name}</p>
+                            <div class="product-rating">⭐ ${perfume.rating}</div>
+                            <div class="product-price">
+                                ${perfume.discount_percent > 0 ? `
+                                    <span class="original-price">$${perfume.price.toFixed(2)}</span>
+                                    <span class="price">$${perfume.discounted_price.toFixed(2)}</span>
+                                ` : `<span class="price">$${perfume.price.toFixed(2)}</span>`}
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn-add-cart" onclick="addToCart(${perfume.perfume_id})">🛒 Add to Cart</button>
+                                <button class="btn-favorite" onclick="toggleFavorite(${perfume.perfume_id})">♡</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            });
+    </script>
+</body>
+</html>

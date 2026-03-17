@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections - AromaLux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navbar">
+            <a href="/" class="logo">✨ AromaLux</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/perfumes">Perfumes</a></li>
+                <li><a href="/collections">Collections</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="/cart" class="nav-icon">🛒 <span class="cart-badge">0</span></a>
+            </div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Collections</h1>
+        <p style="color: var(--text-light); margin-bottom: 2rem;">Explore our curated fragrance collections</p>
+        
+        <div class="products-grid">
+            <div class="product-card" style="cursor: pointer;" onclick="window.location.href='/perfumes?category=1'">
+                <div class="product-image">👨</div>
+                <h3>Men's Perfumes</h3>
+                <p>Sophisticated fragrances for the modern man</p>
+                <a href="/perfumes?category=1" class="btn btn-primary" style="width: 100%; text-align: center;">Browse</a>
+            </div>
+            
+            <div class="product-card" style="cursor: pointer;" onclick="window.location.href='/perfumes?category=2'">
+                <div class="product-image">👩</div>
+                <h3>Women's Perfumes</h3>
+                <p>Elegant fragrances for every woman</p>
+                <a href="/perfumes?category=2" class="btn btn-primary" style="width: 100%; text-align: center;">Browse</a>
+            </div>
+            
+            <div class="product-card" style="cursor: pointer;" onclick="window.location.href='/perfumes?category=3'">
+                <div class="product-image">👥</div>
+                <h3>Unisex Fragrances</h3>
+                <p>Versatile scents for everyone</p>
+                <a href="/perfumes?category=3" class="btn btn-primary" style="width: 100%; text-align: center;">Browse</a>
+            </div>
+            
+            <div class="product-card" style="cursor: pointer;" onclick="window.location.href='/perfumes?category=5'">
+                <div class="product-image">✨</div>
+                <h3>Arabic Oud</h3>
+                <p>Traditional oud-based fragrances</p>
+                <a href="/perfumes?category=5" class="btn btn-primary" style="width: 100%; text-align: center;">Browse</a>
+            </div>
+            
+            <div class="product-card" style="cursor: pointer;" onclick="window.location.href='/perfumes?category=6'">
+                <div class="product-image">🌸</div>
+                <h3>Floral Fragrances</h3>
+                <p>Delicate floral compositions</p>
+                <a href="/perfumes?category=6" class="btn btn-primary" style="width: 100%; text-align: center;">Browse</a>
+            </div>
+            
+            <div class="product-card" style="cursor: pointer;" onclick="window.location.href='/perfumes?category=10'">
+                <div class="product-image">👑</div>
+                <h3>Limited Edition</h3>
+                <p>Exclusive and rare fragrances</p>
+                <a href="/perfumes?category=10" class="btn btn-primary" style="width: 100%; text-align: center;">Browse</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AromaLux</h3>
+                    <p>Luxury fragrances worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

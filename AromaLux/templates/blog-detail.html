@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - AromaLux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .blog-detail-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        .blog-hero {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #E84B8A, #8B5CF6);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+        .blog-meta {
+            display: flex;
+            gap: 2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        .blog-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        .blog-content h2 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .blog-content h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .blog-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navbar">
+            <a href="/" class="logo">✨ AromaLux</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/blogs">Blog</a></li>
+                <li><a href="/perfumes">Perfumes</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="/cart" class="nav-icon">🛒 <span class="cart-badge">0</span></a>
+            </div>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="/blogs" style="color: var(--primary-color); margin: 1rem 0; display: inline-block;">← Back to Blog</a>
+        
+        <div class="blog-detail-container" id="blog-detail">
+            <!-- Loaded via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AromaLux</h3>
+                    <p>Luxury fragrances worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        const slug = '{{ slug }}';
+        
+        async function loadBlogDetail() {
+            try {
+                const response = await fetch(`/api/blogs/${slug}`);
+                if (!response.ok) throw new Error('Blog not found');
+                
+                const blog = await response.json();
+                const container = document.getElementById('blog-detail');
+                
+                container.innerHTML = `
+                    <div class="blog-hero">📰</div>
+                    <h1>${blog.title}</h1>
+                    <div class="blog-meta">
+                        <span>✍️ By ${blog.author}</span>
+                        <span>📅 ${new Date(blog.created_at).toLocaleDateString()}</span>
+                        <span>👁️ ${blog.views} views</span>
+                    </div>
+                    <div class="blog-content">
+                        ${blog.full_content}
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading blog:', error);
+                document.getElementById('blog-detail').innerHTML = '<p>Blog post not found.</p>';
+            }
+        }
+        
+        loadBlogDetail();
+    </script>
+</body>
+</html>

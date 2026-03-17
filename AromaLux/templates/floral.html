@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floral Fragrances - AromaLux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navbar">
+            <a href="/" class="logo">✨ AromaLux</a>
+            
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/perfumes">Perfumes</a></li>
+                <li><a href="/classifications">Classifications</a></li>
+                <li><a href="/collections">Collections</a></li>
+                <li><a href="/blogs">Blog</a></li>
+            </ul>
+            
+            <div class="nav-right">
+                <a href="/cart" class="nav-icon" title="Shopping Cart">
+                    🛒
+                    <span class="cart-badge">0</span>
+                </a>
+                <a href="/profile" class="nav-icon" title="Account">👤</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(232, 75, 138, 0.3));">
+        <div class="container">
+            <div class="hero-content">
+                <h1>🌸 Floral Fragrances</h1>
+                <p>Delicate, elegant, and romantic floral perfumes that capture the essence of flowers</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="section">
+        <div class="container">
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="filterByGender('all')" data-filter="all">All Products</button>
+                <button class="btn btn-outline" onclick="filterByGender('male')" data-filter="male">👨 Male</button>
+                <button class="btn btn-outline" onclick="filterByGender('female')" data-filter="female">👩 Female</button>
+                <button class="btn btn-outline" onclick="filterByGender('unisex')" data-filter="unisex">👥 Unisex</button>
+                
+                <select id="sortSelect" class="sort-select" onchange="changeSortOrder()" style="padding: 0.75rem 1rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 1rem;">
+                    <option value="latest">Latest</option>
+                    <option value="price_low">Price: Low to High</option>
+                    <option value="price_high">Price: High to Low</option>
+                    <option value="rating">Top Rated</option>
+                    <option value="featured">Featured</option>
+                </select>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be loaded here -->
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination" style="text-align: center; margin-top: 2rem;">
+                <!-- Pagination will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About AromaLux</h3>
+                    <p>Your destination for luxury fragrances and fragrance classifications.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/classifications">Classifications</a></li>
+                        <li><a href="/perfumes">All Perfumes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        const classification = 'floral';
+        let currentGenderFilter = 'all';
+        let currentPage = 1;
+        let currentSort = 'latest';
+
+        function filterByGender(gender) {
+            currentGenderFilter = gender;
+            currentPage = 1;
+            loadProducts();
+            document.querySelectorAll('[data-filter]').forEach(btn => {
+                btn.classList.toggle('btn-primary', btn.dataset.filter === gender);
+                btn.classList.toggle('btn-outline', btn.dataset.filter !== gender);
+            });
+        }
+
+        function changeSortOrder() {
+            currentSort = document.getElementById('sortSelect').value;
+            currentPage = 1;
+            loadProducts();
+        }
+
+        function loadProducts() {
+            const url = `/api/classifications/${classification}?page=${currentPage}&gender=${currentGenderFilter}&sort=${currentSort}`;
+            fetch(url)
+                .then(r => r.json())
+                .then(data => {
+                    renderProducts(data.perfumes);
+                    renderPagination(data.pagination);
+                })
+                .catch(err => console.error('Error loading products:', err));
+        }
+
+        function renderProducts(products) {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = products.map(perfume => `
+                <div class="product-card" data-id="${perfume.perfume_id}">
+                    <div class="product-image" data-icon="💎">
+                        ${perfume.discount_percent > 0 ? `<span class="discount-badge">-${perfume.discount_percent}%</span>` : ''}
+                        <span class="gender-badge" style="position: absolute; top: 10px; right: 10px; background: var(--magenta); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: bold;">
+                            ${perfume.gender === 'male' ? '👨' : perfume.gender === 'female' ? '👩' : '👥'} ${perfume.gender.charAt(0).toUpperCase() + perfume.gender.slice(1)}
+                        </span>
+                    </div>
+                    <h3 class="product-name">${perfume.perfume_name}</h3>
+                    <p class="product-brand">${perfume.brand_name}</p>
+                    <div class="product-rating">⭐ ${perfume.rating}</div>
+                    <div class="product-price">
+                        ${perfume.discount_percent > 0 ? `
+                            <span class="original-price">$${parseFloat(perfume.price).toFixed(2)}</span>
+                            <span class="price">$${parseFloat(perfume.discounted_price).toFixed(2)}</span>
+                        ` : `<span class="price">$${parseFloat(perfume.price).toFixed(2)}</span>`}
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn-add-cart" onclick="addToCart(${perfume.perfume_id})">🛒 Add to Cart</button>
+                        <button class="btn-favorite" onclick="toggleFavorite(${perfume.perfume_id})">♡</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPagination(pagination) {
+            const container = document.getElementById('pagination');
+            let html = '';
+            
+            if (pagination.page > 1) {
+                html += `<button class="btn btn-outline" onclick="goToPage(${pagination.page - 1})">← Previous</button>`;
+            }
+            
+            for (let i = 1; i <= pagination.pages && i <= 5; i++) {
+                html += `<button class="btn ${i === pagination.page ? 'btn-primary' : 'btn-outline'}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            
+            if (pagination.page < pagination.pages) {
+                html += `<button class="btn btn-outline" onclick="goToPage(${pagination.page + 1})">Next →</button>`;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            loadProducts();
+            window.scrollTo(0, 0);
+        }
+
+        // Load products on page load
+        loadProducts();
+    </script>
+</body>
+</html>

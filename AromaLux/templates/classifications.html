@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragrance Classifications - AromaLux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="navbar">
+            <a href="/" class="logo">✨ AromaLux</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/perfumes">Perfumes</a></li>
+                <li><a href="/collections">Collections</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="/cart" class="nav-icon">🛒<span class="cart-badge">0</span></a>
+                <a href="/profile" class="nav-icon">👤</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Fragrance Classifications</h1>
+            <p>Explore 26 unique fragrance families and discover your perfect scent</p>
+        </div>
+    </section>
+
+    <!-- Classifications Grid -->
+    <section class="section">
+        <div class="container">
+            <div class="classifications-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 2rem;" id="classifications-grid">
+                <!-- Loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 AromaLux. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        fetch('/api/classifications')
+            .then(r => r.json())
+            .then(classifications => {
+                const html = classifications.map(c => `
+                    <a href="/classification/${c.slug}" style="background: linear-gradient(135deg, #E84B8A, #8B5CF6); text-decoration: none; padding: 1.5rem; border-radius: 12px; text-align: center; color: white; transition: all 0.3s ease;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📦</div>
+                        <h3 style="margin: 0; font-size: 1rem;">${c.name}</h3>
+                        <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem;">${c.count} perfumes</p>
+                    </a>
+                `).join('');
+                document.getElementById('classifications-grid').innerHTML = html;
+            });
+    </script>
+</body>
+</html>
